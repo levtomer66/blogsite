@@ -12,19 +12,19 @@ Visit http://localhost:5000`);
 });
 
 // Home route
-  app.get("/", (req, res) => {
+  app.get("/api", (req, res) => {
     res.send("You Got It!");
   });
   
   // Mock APIs
-  app.get("/users", (req, res) => {
+  app.get("/api/users", (req, res) => {
     res.json([
       { name: "William", location: "Abu Dhabi" },
       { name: "Chris", location: "Vegas" }
     ]);
   });
   
-  app.post("/user", (req, res) => {
+  app.post("/api/user", (req, res) => {
     const { name, location } = req.body;
   
     res.send({ status: "User created", name, location });
