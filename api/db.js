@@ -1,3 +1,4 @@
+const MongoClient = require('mongodb').MongoClient
   // Create cached connection variable
   let cachedDb = null
 
