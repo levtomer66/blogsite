@@ -1,5 +1,4 @@
 const express = require("express");
-const url = require('url')
 import * as dbConroller from "./db.js"
 
 const app = express();
