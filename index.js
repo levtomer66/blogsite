@@ -5,7 +5,6 @@ const port = 5000;
 
 // Body parser
 app.use(express.urlencoded({ extended: false }));
-app.use("/", express.static('public'));
 // Listen on port 5000
 app.listen(port, () => {
   console.log(`Server is booming on port 5000
