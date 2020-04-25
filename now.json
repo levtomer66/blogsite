@@ -3,7 +3,12 @@
     "builds": [
         { "src" : "public/*.html", "use" : "@now/static"},
         { "src" : "public/*.js", "use" : "@now/static"},
-        { "src": "index.js", "use": "@now/node-server" }
+        { "src": "api/index.js", "use": "@now/node-server" }
+    ],
+    "routes": [
+        { "src": "/", "dest": "public/index.html" }
+        { "src": "/api", "dest": "api/index.js" }
+
     ]
   }
   

@@ -12,9 +12,9 @@ Visit http://localhost:5000`);
 });
 
 // Home route
-// app.get("/", (req, res) => {
-//     res.redirect("/index.html");
-//   });
+  app.get("/", (req, res) => {
+    res.send("You Got It!");
+  });
   
   // Mock APIs
   app.get("/users", (req, res) => {
