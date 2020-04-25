@@ -1,4 +1,8 @@
 const express = require("express");
+const MongoClient = require('mongodb').MongoClient
+const url = require('url')
+import * as dbConroller from "./db.js"
+
 const app = express();
 
 const port = 5000;
@@ -17,12 +21,7 @@ Visit http://localhost:5000`);
   });
   
   // Mock APIs
-  app.get("/api/users", (req, res) => {
-    res.json([
-      { name: "William", location: "Abu Dhabi" },
-      { name: "Chris", location: "Vegas" }
-    ]);
-  });
+  app.get("/api/posts", dbConroller.getPosts);
   
   app.post("/api/user", (req, res) => {
     const { name, location } = req.body;
@@ -30,3 +29,4 @@ Visit http://localhost:5000`);
     res.send({ status: "User created", name, location });
   });
   
+
