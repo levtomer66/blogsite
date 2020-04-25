@@ -37,8 +37,8 @@ const url = require('url')
     const collection = await db.collection('posts')
   
     // Select the users collection from the database
-    const users = await collection.find({}).toArray()
+    const posts = await collection.find({}).toArray()
   
     // Respond with a JSON string of all users in the collection
-    res.status(200).json({ users })
+    res.status(200).json({ posts })
   }

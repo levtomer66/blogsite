@@ -36,10 +36,10 @@ var app = new Vue({
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function(){
       if (xhr.readyState === 4 && xhr.status === 200){
-        binder.fps = JSON.parse(xhr.responseText);
+        binder.posts = JSON.parse(xhr.responseText).posts;
       }
     };
-    xhr.open('GET', 'https://wandering-leaf-ab05.savta.workers.dev/', true);
+    xhr.open('GET', 'https://blogsite.now.sh/api/posts', true);
     xhr.send()
   }
 })
