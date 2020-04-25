@@ -6,6 +6,7 @@ const url = require('url')
   // A function for connecting to MongoDB,
   // taking a single parameter of the connection string
   async function connectToDatabase(uri) {
+      console.log(uri);
     // If the database connection is cached,
     // use it instead of creating a new connection
     if (cachedDb) {
@@ -27,6 +28,7 @@ const url = require('url')
   // The main, exported, function of the endpoint,
   // dealing with the request and subsequent response
   export const getPosts = async (req, res) => {
+    console.log(process.env);
     // Get a database connection, cached or otherwise,
     // using the connection string environment variable as the argument
     const db = await connectToDatabase(process.env.MONGO_URL)
