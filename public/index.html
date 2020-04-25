@@ -79,7 +79,7 @@
                                 :href="`${p.link}`"
                                 style="transition: transform 0.2s ease 0s, -webkit-transform 0.2s ease 0s;">
                                 <div>
-                                    <div class="category-tag-2" style="background-color: #a872b7;">{{ p.category }}</div>
+                                    <div class="category-tag-2" :style="`background-color: ${p.categoryhexcolor};`">{{ p.category }}</div>
                                     <div class="featured-image"
                                         :style="`background-image: url('${p.imgurl}');`">
                                     </div>
@@ -112,13 +112,13 @@
                                 style="transition: box-shadow 0.2s ease 0s, transform 0.2s ease 0s, -webkit-transform 0.2s ease 0s;">
                                 <div class="image-wrapper">
                                     <div class="thumbnail-image"
-                                        :style="`background-image: url('${p.postimgurl}');`">
+                                        :style="`background-image: url('${p.imgurl}');`">
                                     </div>
                                     <div class="category-tag" :style="`background-color: ${p.categoryhexcolor};`">{{ p.category }}</div>
                                 </div>
                                 <div class="thumbnail-text">
                                     <div class="blog-title">{{ p.title }}</div>
-                                    <div class="preview-text">{{ p.preview }}</div>
+                                    <div class="preview-text">{{ p.description }}</div>
                                 </div>
                                 <div class="thumb-details w-clearfix"><img class="author-img"
                                         :src="`${p.authorimgurl}`">
