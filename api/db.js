@@ -18,7 +18,7 @@ const url = require('url')
   
     // Select the database through the connection,
     // using the database path of the connection string
-    const db = await client.db(url.parse(uri).pathname.substr(1))
+    const db = await client.db('blogsite');
   
     // Cache the database connection and return the connection
     cachedDb = db
@@ -28,7 +28,7 @@ const url = require('url')
   // The main, exported, function of the endpoint,
   // dealing with the request and subsequent response
   export const getPosts = async (req, res) => {
-    console.log(process.env);
+    
     // Get a database connection, cached or otherwise,
     // using the connection string environment variable as the argument
     const db = await connectToDatabase(process.env.MONGO_URL)
