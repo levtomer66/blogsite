@@ -14,7 +14,7 @@ Visit http://localhost:5000`);
 
 // Home route
 app.get("/", (req, res) => {
-    res.send("Welcome to a basic express App");
+    res.redirect("/index.html");
   });
   
   // Mock APIs
