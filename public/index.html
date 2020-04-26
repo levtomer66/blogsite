@@ -72,7 +72,7 @@
                 <div class="w-dyn-list">
                     <div  class="w-clearfix w-dyn-items w-row" >
                         
-                        <div  class="featuredthumbnail w-col w-col-6 w-dyn-item" v-for="p in fps" :key="fps.id">
+                        <div  class="featuredthumbnail w-col w-col-6 w-dyn-item" v-for="p in posts" v-if="p.featurepost":key="fps._id">
                             <a
                                 class="featured-wrapper w-inline-block" data-ix="featured-wrapper"
                                 :href="`${p.link}`"
@@ -106,7 +106,7 @@
                 </div>
                 <div class="w-dyn-list">
                     <div class="w-clearfix w-dyn-items w-row">
-                        <div class="blog-thumbnail w-col w-col-4 w-dyn-item" v-for="p in posts" :key="posts.id"><a class="thumbnail-wrapper w-inline-block"
+                        <div class="blog-thumbnail w-col w-col-4 w-dyn-item" v-for="p in posts" v-if="!p.featurepost" :key="posts._id"><a class="thumbnail-wrapper w-inline-block"
                                 data-ix="blog-thumbnail" :href="`${p.link}`"
                                 style="transition: box-shadow 0.2s ease 0s, transform 0.2s ease 0s, -webkit-transform 0.2s ease 0s;">
                                 <div class="image-wrapper">
