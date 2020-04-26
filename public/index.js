@@ -6,6 +6,13 @@ var app = new Vue({
       posts: null
     }
   },
+  methods: {
+    categ: function (cat) {
+      return this.posts.filter(function (p) {
+        return p.category === cat
+      })
+    }
+  },
   mounted() {
     var binder = this;
     var xhr = new XMLHttpRequest();
