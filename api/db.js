@@ -28,16 +28,21 @@ const url = require('url')
   // The main, exported, function of the endpoint,
   // dealing with the request and subsequent response
   export const getPosts = async (req, res) => {
-    
+    const category = req.query.category;
+    let finder = {}
+    if (category) {
+        finder = {category: category};
+    }
     // Get a database connection, cached or otherwise,
     // using the connection string environment variable as the argument
     const db = await connectToDatabase(process.env.MONGO_URL)
   
     // Select the "users" collection from the database
     const collection = await db.collection('posts')
-  
+    
+    console.log(`Looking for ${finder}`);
     // Select the users collection from the database
-    const posts = await collection.find({}).toArray()
+    const posts = await collection.find(finder).toArray()
   
     // Respond with a JSON string of all users in the collection
     res.status(200).json({ posts })

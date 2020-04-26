@@ -3,25 +3,31 @@ var app = new Vue({
   el: '#app',
   data () {
     return {
-      posts: null
+      posts: null,
+      loading: false
     }
+  },
+  created() {
+    this.getPosts()
+  },
+  watch: {
+    '$route' : 'getPosts'
   },
   methods: {
-    categ: function (cat) {
-      return this.posts.filter(function (p) {
-        return p.category === cat
-      })
+    getPosts() {
+      var binder = this;
+      binder.loading = true;
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function(){
+        if (xhr.readyState === 4 && xhr.status === 200){
+          binder.loading = false;
+          binder.posts = JSON.parse(xhr.responseText).posts;
+        }
+      };
+      xhr.open('GET', 'https://blogsite.now.sh/api/posts?category=' + this.$route.params.category, true);
+      xhr.send()
+      
     }
-  },
-  mounted() {
-    var binder = this;
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(){
-      if (xhr.readyState === 4 && xhr.status === 200){
-        binder.posts = JSON.parse(xhr.responseText).posts;
-      }
-    };
-    xhr.open('GET', 'https://blogsite.now.sh/api/posts', true);
-    xhr.send()
   }
+
 })

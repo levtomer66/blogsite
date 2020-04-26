@@ -14,9 +14,9 @@ Visit http://localhost:5000`);
 });
 
 // Home route
-  app.get("/api", (req, res) => {
-    res.send("You Got It!");
-  });
+  // app.get("/api", (req, res) => {
+  //   res.send("You Got It!");
+  // });
   
   // Mock APIs
   app.get("/api/posts", dbConroller.getPosts);
