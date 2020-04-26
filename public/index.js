@@ -24,7 +24,7 @@ var app = new Vue({
           binder.posts = JSON.parse(xhr.responseText).posts;
         }
       };
-      xhr.open('GET', 'https://blogsite.now.sh/api/posts?category=' + this.$route.params.category, true);
+      xhr.open('GET', 'https://blogsite.now.sh/api/posts?category=' + binder.$route.params.category, true);
       xhr.send()
       
     }
