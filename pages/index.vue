@@ -13,21 +13,21 @@
                         <div  class="featuredthumbnail w-col w-col-6 w-dyn-item" v-for="p of posts" :key="p._id">
                             <a
                                 class="featured-wrapper w-inline-block" data-ix="featured-wrapper"
-                                :href="`${p.link}`"
+                                :href="`/posts/${p._id}`"
                                 style="transition: transform 0.2s ease 0s, -webkit-transform 0.2s ease 0s;">
                                 <div>
-                                    <div class="category-tag-2" :style="`background-color: ${p.categoryhexcolor};`">{{ p.category }}</div>
+                                    <div class="category-tag-2" :style="`background-color: ${p.categoryhexcolor};`">{{ p.postCategory }}</div>
                                     <div class="featured-image"
-                                        :style="`background-image: url('${p.imgurl}');`">
+                                        :style="`background-image: url('${p.postImg}');`">
                                     </div>
                                 </div>
                                 <div class="featured-text">
-                                    <div class="featured-title">{{ p.title }}</div>
-                                    <div class="featured-description">{{ p.description }}</div>
+                                    <div class="featured-title">{{ p.postTitle }}</div>
+                                    <div class="featured-description">{{ p.postDescription }}</div>
                                     <div class="featured-details">
                                         <div class="w-clearfix"><img class="author-img"
-                                                :src="`${p.authorimgurl}`">
-                                            <div class="author-title lite">{{ p.authorname }}</div>
+                                                :src="`${p.authorPic}`">
+                                            <div class="author-title lite">{{ p.authorName }}</div>
                                             <div class="lite thumbnail-date"></div>
                                         </div>
                                     </div>
@@ -73,7 +73,15 @@
 export default {
   data() {
     return {
-      posts: []
+      posts: [],
+      activeLoginModal: null
+    }
+  },
+  beforeRouteLeave(to, from, next) {
+    if (to.name === "product-id") {
+      this.displayProductModal(to);
+    } else {
+      next();
     }
   },
   async fetch() {

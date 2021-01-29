@@ -1,5 +1,12 @@
 const { db } = require("../initialize/db")
 
+export const getPostsById = async (postId) => {
+    console.log(`Looking for ${postId}...`)
+    const post = await (await db).collection('posts').findOne({_id: require('mongodb').ObjectID(postId)});
+    console.log(post);
+    return post;
+}
+
 export const getPostsByCategory = async (category) => {
 
     let finder = {}
@@ -15,10 +22,7 @@ export const getPostsByCategory = async (category) => {
     // ]
 }
 
-export const savePost = async (title, content) => {
-    const doc = {
-        title: title,
-        content: content
-    }
+export const savePost = async (doc) => {
+
     return await (await db).collection('posts').insertOne(doc);
 }

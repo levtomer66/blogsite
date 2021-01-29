@@ -23,11 +23,14 @@ export default {
   /*
    ** Global CSS
    */
-  css: [],
+  css: ['medium-editor/dist/css/medium-editor.css',
+  'vuejs-medium-editor/src/themes/default.css',
+  'highlight.js/styles/ocean.css' //if using code highlight
+],
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: [ { src: '~/plugins/medium-editor', ssr: false } ],
   /*
    ** Nuxt.js modules
    */
@@ -36,10 +39,12 @@ export default {
     // Doc: https://bootstrap-vue.js.org/docs/
     'bootstrap-vue/nuxt',
     '@nuxtjs/pwa',
-    '@tui-nuxt/editor',
+    '@nuxtjs/bootstrap-vue',
   ],
-  tui: {
-    editor: {}
+
+  axios: {
+    credentials: true,
+    withCredentials : true
   },
   /*
    ** Build configuration

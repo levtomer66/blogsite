@@ -4,8 +4,8 @@ const { handleSignIn } = require('../../controllers/usersController')
 
 const GoogleStrategy = googleStrategy.Strategy;
 
-const googleClientSecret = "LY5CdNY6W8fvzSAm2dlsGwM4";
-const googleClientId = "590743938959-0p0fr2i5ke7u9dq9t8rg86ekusf7b3f3.apps.googleusercontent.com";
+const googleClientSecret = "m0PMgxEDvsu5F4LT1ZM0eivO";
+const googleClientId = "1080971073403-8vrie6ndgc15jg7dpscsv2dbea5diogj.apps.googleusercontent.com";
 
 passport.use(
 	"google",

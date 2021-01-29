@@ -17,7 +17,7 @@ passport.use(
         try {
 			user = await userService.getUserByEmail(jwt_payload.user.email);
         } catch (e) {
-            done(new Error("failed to auth", null));
+            done(new Error("failed to auth" + e, null));
         }
 		if (user) {
 			done(null, user);

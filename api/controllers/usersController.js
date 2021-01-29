@@ -72,7 +72,9 @@ export const handleSignIn = async (accessToken, refreshToken, profile, done) => 
       familyName: newUser.familyName
     },
     gender: newUser.gender,
-    _json: { birthday: newUser.birthday },
+    _json: {
+      birthday: newUser.birthday
+    },
     emails: [{
       value: newUser.email
     }],
@@ -87,38 +89,44 @@ export const handleSignIn = async (accessToken, refreshToken, profile, done) => 
   console.log(newUser);
   let user = await userService.getUserByEmail(newUser.email);
   if (!user) {
-      user = await userService
-          .createUser(newUser)
-          .catch(e => {
-              return done(new Error("failed to create user"), null);
-          });
+    console.log("does not exists creating")
+    userService
+      .createUser(newUser)
+      .then(user => {
+        return done(null, user)
+      })
+      .catch(e => {
+        return done(new Error("failed to create user: " + e), null);
+      });
+  } else {
+    console.log("exits done")
+    return done(null, user);
   }
-
-  return done(null, user);
 }
 const jwt = require('jsonwebtoken');
 
 export const generateUserToken = (req, res) => {
-    const userId = req.user._id; // database id
-    const user = req.user;
-    const jwtSecret = 'blogsite-secret';
-    const token = jwt.sign({
-        iat: Math.floor(Date.now() / 1000) - 30, //jwt leeway
-        user: {
-          id: user.id,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          email: user.email,
-        },
-      },
-      jwtSecret, {
-        expiresIn: "7 days",
-        subject: userId.toString()
-      }
-    );
-    res.cookie("bgadimToken", token, {
-		domain: process.env.NODE_ENV === "production" ? COOKIE_DOMAIN : "",
-		expires: token.exp * 1000,
-    }).redirect('/');
-  }
+  const userId = req.user._id; // database id
+  const user = req.user;
+  const jwtSecret = 'blogsite-secret';
+  const token = jwt.sign({
+      iat: Math.floor(Date.now() / 1000) - 30, //jwt leeway
+      user: {
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        img: user.picPath
 
+      },
+    },
+    jwtSecret, {
+      expiresIn: "7 days",
+      subject: userId.toString()
+    }
+  );
+  res.cookie("blogsiteToken", token, {
+    domain: process.env.NODE_ENV === "production" ? COOKIE_DOMAIN : "",
+    expires: token.exp * 1000,
+  }).redirect('/');
+}

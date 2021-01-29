@@ -4,8 +4,8 @@ const { handleSignIn } = require('../../controllers/usersController')
 
 const FacebookStrategy = fbStrategy.Strategy;
 
-const facebookAppSecret = "9435969cd990f4c5664465ee35b0dc0c";
-const FACEBOOK_APP_ID = "378926780158738";
+const facebookAppSecret = "80a67336a5a0a1249259a92f9b838708";
+const FACEBOOK_APP_ID = "1182595942212387";
 
 passport.use(
 	"facebook",
