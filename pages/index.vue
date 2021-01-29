@@ -1,72 +1,92 @@
 <template>
-  <div class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        nuxtjs
-      </h1>
-      <h2 class="subtitle">
-        My astonishing Nuxt.js project
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
-  </div>
+  <div class="bottom-padding main-section" id="posts">
+            <p v-if="$fetchState.pending">Loading...</p>
+
+            <div class="w-container" id="Latest-post" v-else>
+                <div class="section-heading">
+                    <h2 class="section-title">אסור לפספס</h2>
+                    <div class="med-divider"></div>
+                </div>
+                <div class="w-dyn-list">
+                    <div  class="w-clearfix w-dyn-items w-row" >
+
+                        <div  class="featuredthumbnail w-col w-col-6 w-dyn-item" v-for="p of posts" :key="p._id">
+                            <a
+                                class="featured-wrapper w-inline-block" data-ix="featured-wrapper"
+                                :href="`${p.link}`"
+                                style="transition: transform 0.2s ease 0s, -webkit-transform 0.2s ease 0s;">
+                                <div>
+                                    <div class="category-tag-2" :style="`background-color: ${p.categoryhexcolor};`">{{ p.category }}</div>
+                                    <div class="featured-image"
+                                        :style="`background-image: url('${p.imgurl}');`">
+                                    </div>
+                                </div>
+                                <div class="featured-text">
+                                    <div class="featured-title">{{ p.title }}</div>
+                                    <div class="featured-description">{{ p.description }}</div>
+                                    <div class="featured-details">
+                                        <div class="w-clearfix"><img class="author-img"
+                                                :src="`${p.authorimgurl}`">
+                                            <div class="author-title lite">{{ p.authorname }}</div>
+                                            <div class="lite thumbnail-date"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a></div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="w-container">
+                <div class="section-heading">
+                    <h2 class="section-title">החדשים</h2>
+                    <div class="med-divider"></div>
+                </div>
+                <div class="w-dyn-list">
+                    <div class="w-clearfix w-dyn-items w-row">
+                        <div class="blog-thumbnail w-col w-col-4 w-dyn-item" v-for="p of posts" :key="p._id"><a class="thumbnail-wrapper w-inline-block"
+                                data-ix="blog-thumbnail" :href="`${p.link}`"
+                                style="transition: box-shadow 0.2s ease 0s, transform 0.2s ease 0s, -webkit-transform 0.2s ease 0s;">
+                                <div class="image-wrapper">
+                                    <div class="thumbnail-image"
+                                        :style="`background-image: url('${p.imgurl}');`">
+                                    </div>
+                                    <div class="category-tag" :style="`background-color: ${p.categoryhexcolor};`">{{ p.category }}</div>
+                                </div>
+                                <div class="thumbnail-text">
+                                    <div class="blog-title">{{ p.title }}</div>
+                                    <div class="preview-text">{{ p.description }}</div>
+                                </div>
+                                <div class="thumb-details w-clearfix"><img class="author-img"
+                                        :src="`${p.authorimgurl}`">
+                                    <div class="author-title">{{ p.authorname }}</div>
+                                    <div class="thumbnail-date">{{ p.date }}</div>
+                                </div>
+                            </a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-
 export default {
-  components: {
-    Logo
-  }
+  data() {
+    return {
+      posts: []
+    }
+  },
+  async fetch() {
+    this.posts = await fetch('http://localhost:3001/api/posts').then(res =>
+      res.json()
+    )
+  },
+  // call fetch only on client-side
+  fetchOnServer: false
 }
+
+
 </script>
 
 <style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
 </style>

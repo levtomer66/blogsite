@@ -3,11 +3,11 @@ const { Strategy } = require("passport-jwt");
 const userService = require('../../services/usersService')
 
 
-const jwtSecret = process.env.JWTSECRET || "bgadim-secret";
+const jwtSecret = process.env.JWTSECRET || "blogsite-secret";
 const opts = {
 	secretOrKey: jwtSecret,
 	jwtFromRequest: function (req) {
-		let token = req && req.cookies && req.cookies["bgadimToken"];
+		let token = req && req.cookies && req.cookies["blogsiteToken"];
 		return token;
 	},
 };
