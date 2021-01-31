@@ -1,12 +1,5 @@
 <template>
   <div>
-    <script src="https://unpkg.com/vue@2.5.17/dist/vue.min.js"></script>
-
-    <link
-      href="https://daks2k3a4ib2z.cloudfront.net/560425adca8e085154729773/css/template-escape.webflow.05d64341e.css"
-      rel="stylesheet"
-      type="text/css"
-    />
     <div
       class="navbar w-nav"
       data-animation="over-right"
@@ -16,25 +9,47 @@
       style="opacity: 1; transition: opacity 600ms ease 0s"
     >
       <div class="w-container">
-        <a class="logo w-nav-brand w--current" href="/">
-          <div class="long-text">בולילים</div>
-        </a>
+        <!-- <a class="logo w-nav-brand w--current" href="/">
+          <div class="long-text">הבלוג</div>
+        </a> -->
+        <div class="profile w-nav-brand w--current">
+          <a href="#">
+            <img
+              :src="user.picPath"
+              alt="profile"
+              v-if="this.$store.state.auth !== null"
+              @click="dropdown()"
+            />
+          </a>
+          <div class="dropdown" :style="picClick ? 'display: inline-block' : null">
+            <a :href="'users/' + user.id + '/settings'">הגדרות</a>
+            <a :href="'/logout'">התנתק</a>
+          </div>
+        </div>
         <nav class="nav-menu w-nav-menu" role="navigation">
           <a
             class="nav-link w-nav-link w--current"
             href="/"
             style="max-width: 940px"
             >בית</a
-          ><a class="nav-link w-nav-link" href="/about" style="max-width: 940px"
-            >עלינו</a
           ><a
             class="nav-link w-nav-link"
-            href="/contact"
+            href="/profiles"
             style="max-width: 940px"
-            >צרו קשר</a
+            >עלינו</a
           >
-          <nuxt-link class="nav-link w-nav-link" v-if="this.$store.state.auth === null" to="login">התחבר</nuxt-link>
-          <nuxt-link class="nav-link w-nav-link" v-if="this.$store.state.auth !== null" to="logout">התנתק</nuxt-link>
+          <nuxt-link
+            class="nav-link w-nav-link"
+            v-if="this.$store.state.auth === null"
+            to="login"
+            >התחבר</nuxt-link
+          >
+          <nuxt-link
+            class="nav-link w-nav-link"
+            v-if="this.$store.state.auth !== null"
+            to="logout"
+            >התנתק</nuxt-link
+          >
           <a
             class="close-x w-hidden-main w-hidden-medium w-hidden-small"
             href="#"
@@ -61,7 +76,7 @@
             transition: opacity 600ms ease 0s, transform 600ms ease 0s;
           "
         >
-          עושים פיפ מקקה
+          הבלוג
         </div>
         <div
           class="hero-subheading"
@@ -72,56 +87,51 @@
             transition: opacity 600ms ease 0s, transform 600ms ease 0s;
           "
         >
-          שמעו כיצד אנחנו עושים פיפ מקקה
-        </div>
-        <a
-          class="button w-button"
-          data-ix="hero-button"
-          href="#Latest-post"
-          style="
-            transition: background-color 0.2s ease 0s, color 0.2s ease 0s,
-              opacity 600ms ease 0s, transform 600ms ease 0s;
-            opacity: 1;
-            transform: scaleX(1) scaleY(1) scaleZ(1);
-          "
-          >ראו פוסטים אחרונים</a
-        >
-      </div>
-    </div>
-    <div class="category-section">
-      <div class="w-container">
-        <div class="w-dyn-list">
-          <div class="w-clearfix w-dyn-items w-row">
-            <div class="category-wrapper w-col w-col-2 w-dyn-item">
-              <a class="category-link" href="?category=nature">?</a>
-            </div>
-            <div class="category-wrapper w-col w-col-2 w-dyn-item">
-              <a class="category-link" href="?category=photography">נראה</a>
-            </div>
-            <div class="category-wrapper w-col w-col-2 w-dyn-item">
-              <a class="category-link" href="?category=relaxation">עוד</a>
-            </div>
-            <div class="category-wrapper w-col w-col-2 w-dyn-item">
-              <a class="category-link" href="?category=vacation">מה</a>
-            </div>
-            <div class="category-wrapper w-col w-col-2 w-dyn-item">
-              <a class="category-link" href="?category=travel">נראה</a>
-            </div>
-            <div class="category-wrapper w-col w-col-2 w-dyn-item">
-              <a class="category-link" href="?category=adventure">טיסן</a>
-            </div>
-          </div>
+          ים, קונספירציות, סייבר, מחקר
         </div>
       </div>
-    </div>
-    <div>
-      {{ this.$store.state.auth.img }}
     </div>
     <nuxt />
   </div>
 </template>
+<style scoped>
+.profile {
+  position: absolute;
+  right: 15px;
+  top: 20px;
+  display: inline-block;
+}
 
-<style src=""></style>
+.profile img {
+  position: static;
+  right: 10px;
+  bottom: 10px;
+  width: 40px;
+  margin-top: 5px;
+  margin-right: 10px;
+  margin-bottom: 0px;
+  float: left;
+  border-radius: 60px;
+}
+
+.dropdown {
+  display: none;
+  position: absolute;
+  right: 17px;
+  top: 47px;
+  text-align: center;
+}
+.dropdown a {
+  display: block;
+  padding: 10px;
+  color: #b4d0d1;
+  text-decoration: none;
+  font-size: 16px;
+}
+.dropdown a:hover {
+  color: gray;
+}
+</style>
 <style>
 html {
   font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -134,6 +144,7 @@ html {
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
   direction: rtl;
+  text-align: right;
 }
 
 *,
@@ -143,3 +154,32 @@ html {
   margin: 0;
 }
 </style>
+<script>
+export default {
+  data() {
+    return {
+      picClick: false,
+      user: {
+        picPath:
+          "https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=3865662376829212&width=70&ext=1614520779&hash=AeSLo8LGBwBePTu-n5w",
+      },
+    };
+  },
+  methods: {
+    dropdown() {
+      this.picClick = !this.picClick;
+    }
+  },
+  async fetch() {
+    if (this.$store.state.auth) {
+      try {
+        console.log("fetching me")
+        const me = await this.$axios.get("http://localhost:3001/api/users/me")
+        this.user = me.data
+      } catch(e) {
+        console.log("Couln't fetch me")
+      }
+    }
+  }
+};
+</script>

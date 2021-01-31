@@ -4,9 +4,13 @@ const {
   facebookCallback,
   googleAuth,
   googleCallback,
-  generateUserToken
+  generateUserToken,
+  getAdminsAbout,
+  getProfileDetails,
+  setProfileDetailsForUser
 } = require('../../controllers/usersController')
-
+const passport = require("passport");
+const auth = passport.authenticate("jwt", { session: false });
 
 
 app.get('/api/users', (req, res) => {
@@ -22,4 +26,8 @@ app.get("/api/users/auth/facebook/callback", facebookCallback(), generateUserTok
 app.get("/api/users/auth/google", googleAuth());
 app.get("/api/users/auth/google/callback", googleCallback(), generateUserToken);
 
+app.get("/api/users/getAbout", getAdminsAbout);
+app.get("/api/users/me", auth, getProfileDetails)
+
+app.post("/api/users/updateDetails", auth, setProfileDetailsForUser)
 module.exports = app

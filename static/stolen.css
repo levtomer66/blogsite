@@ -96,10 +96,10 @@
 
    .hero-section {
      position: relative;
-     height: 500px;
-     padding-top: 184px;
-     background-image: -webkit-linear-gradient(315deg, rgba(30, 33, 33, .82) 1%, rgba(32, 32, 32, .14) 98%), url("http://uploads.webflow.com/560425adca8e085154729773/5614eb8fe8da77e53e25f7fc_photo-1439189741837-58720e8d82d5.jpg");
-     background-image: linear-gradient(135deg, rgba(30, 33, 33, .82) 1%, rgba(32, 32, 32, .14) 98%), url("http://uploads.webflow.com/560425adca8e085154729773/5614eb8fe8da77e53e25f7fc_photo-1439189741837-58720e8d82d5.jpg");
+     height: 300px;
+     padding-top: 120px;
+     background-image: -webkit-linear-gradient(315deg, rgba(30, 33, 33, .82) 1%, rgba(32, 32, 32, .14) 98%), url("https://www.vapf.com/blog/wp-content/uploads/2018/04/cala-de-la-granadella-cumbre-del-sol-VAPF.jpg");
+     background-image: linear-gradient(135deg, rgba(30, 33, 33, .82) 1%, rgba(32, 32, 32, .14) 98%), url("https://www.vapf.com/blog/wp-content/uploads/2018/04/cala-de-la-granadella-cumbre-del-sol-VAPF.jpg");
      background-position: 0px 0px, 50% 50%;
      background-size: auto, cover;
    }
@@ -468,7 +468,7 @@
      color: #fff;
      font-size: 27px;
      line-height: 30px;
-     text-align: left;
+     text-align: right;
    }
 
    .category-tag-2 {
@@ -493,7 +493,7 @@
      color: hsla(0, 0%, 100%, .7);
      font-size: 14px;
      line-height: 25px;
-     text-align: left;
+     text-align: right;
    }
 
    .featured-details {
@@ -788,6 +788,7 @@
    .category-section {
      padding-top: 9px;
      padding-bottom: 9px;
+     padding-left: 150px;
      border-bottom: 1px solid #e0e0e0;
      background-color: #fff;
    }

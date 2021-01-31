@@ -130,3 +130,29 @@ export const generateUserToken = (req, res) => {
     expires: token.exp * 1000,
   }).redirect('/');
 }
+
+export const getAdminsAbout = async (req, res) => {
+  const users = await userService.getAboutUserProfiles();
+  return res.status(200).send(users);
+}
+
+export const getProfileDetails = async (req, res) => {
+  const userId = req.user.id;
+  console.log(userId);
+  const profile = await userService.getProfileDetailsForUserId(userId);
+  if (!profile) {
+      return res.status(404).send("Coulnd't fetch profile")
+  }
+  return res.status(200).send(profile);
+}
+
+export const setProfileDetailsForUser = async (req, res) => {
+  const userId = req.user.id;
+  const userDoc = {
+    displayName: req.body.displayName,
+    picPath: req.body.picPath,
+    qas: req.body.qas
+  }
+  await userService.replaceUserSettings(userId, userDoc);
+  return res.status(201).send("Profile settings created successfully");
+}

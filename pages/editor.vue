@@ -1,20 +1,56 @@
 <template>
+  <div id="app" style="display: inline; text-align: right; float: right; margin-right: 15px">
+    <div>
+      <label class="label">תיאור</label>
+      <div class="control">
+        <input name="postDescription"
+          v-model="form.postDescription"
+          class="input" type="text" placeholder="תיאור פוסט">
+        </div>
+  </div>
   <div>
+      <label class="label">תמונת פוסט</label>
+        <input ref="fileInput" @change="onFileSelected" type="file" name="postImg" style="display: none" /><br />
+      <div class="control" v-if="form.postImg == ''">
+        <button @click="$refs.fileInput.click()">העלה תמונת רקע</button>
+        </div>
+        <div v-else>
+          <img height="250px" width="250px" @click="$refs.fileInput.click()" :src=form.postImg alt="post image">
+        </div>
+  </div>
+  <div>
+      <label class="label">קטגוריה</label>
+      <ul class="control">
+        <li v-for="cat of categories" :key="cat" >
+        {{ cat.name }} <input type="radio" :id=cat.uri :value=cat.uri name="category" v-model="form.postCategory">
+      </li>
+        </ul>
+  </div>
+  <div>
+    <div class="control">
     <medium-editor
       v-model="content"
       :options="options"
       :prefill="defaultValue"
       v-on:uploaded="uploadCallback"
     >
-    </medium-editor>
-    <button @click="savePost()">Save!</button>
-    <p v-if="errors.length">
+    </medium-editor></div>
+  </div>
+    <div class="field">
+      <div class="control">
+        <button @click="savePost()">Save!</button>
+      <br />
+      </div>
+        </div>
+        <p v-if="errors.length">
     <b>הפוסט לא נשמר כי:</b>
     <ul>
-      <li v-for="error in errors">{{ error }}</li>
+      <li v-for="error in errors" :key="error">{{ error }}</li>
     </ul>
   </p>
   </div>
+
+
 </template>
 
 <style >
@@ -24,15 +60,19 @@
 </style>
 
 <script>
+import categoriesJ from '../static/categories.json'
 export default {
+  middleware: "authenticated",
   data() {
     return {
+      form: { postDescription: "", postImg: "", postCategory: "" },
       errors: [],
       content: "",
+      categories: categoriesJ,
       defaultValue: "",
       options: {
         placeholder: {
-          text: "כתוב טקסט כאן",
+          text: "",
           hideOnClick: true,
         },
         uploadUrl: "https://api.imgur.com/3/image",
@@ -80,19 +120,43 @@ export default {
       },
     };
   },
-  async mounted() {
+  async fetch() {
     if (this.$route.query.post !== undefined) {
-      const post = await this.$axios.get(
-        `http://localhost:3001/api/posts/${this.$route.query.post}`
-      );
-      this.setContent(post.data.postContent);
+      try {
+        const post = await this.$axios.get(
+          `http://localhost:3001/api/posts/${this.$route.query.post}`
+        );
+        this.form.postDescription = post.data.postDescription;
+        this.form.postImg = post.data.postImg;
+        this.form.postCategory = post.data.postCategory;
+        console.log(post.data);
+        this.setContent(post.data.postContent);
+      } catch (e) {
+
+        this.$router.push({path: '/editor'});
+        vm.$forceUpdate();
+      }
     } else {
       this.setContent(Buffer.from("<h1>כתוב מאמר חדש</h1>").toString("base64"));
     }
   },
   methods: {
+    onFileSelected: async function (image) {
+      const file = image.target.files[0];
+      const formData = new FormData();
+      formData.append("image", file);
+      const CLIENT_ID = "7d3820b2b717a2b";
+      const ROOT_URL = "https://api.imgur.com";
+
+      const res = await this.$axios.post(`${ROOT_URL}/3/image`, formData, {
+        headers: {
+          Authorization: `Bearer f8c2b8ade9dc01a6d0d8b4ac82d3903e02611faa`,
+        },
+      });
+      this.form.postImg = res.data.data.link;
+    },
     setContent: function (con) {
-      this.defaultValue = Buffer.from(con, "base64").toString("ascii");
+      this.defaultValue = Buffer.from(con, "base64").toString("utf8");
     },
     async savePost() {
       this.errors = [];
@@ -104,17 +168,20 @@ export default {
       if (h1.length < 1) {
         this.errors.push("חייב שיהיה כותרת h1");
       }
-      var img = el.getElementsByTagName("img");
-      if (img.length < 1) {
-        this.errors.push("חייבת להיות לפחות תמונה אחת");
+      if (this.form.postDescription == "") {
+        this.errors.push("חייב תיאור");
       }
+      if (this.form.postCategory == "") {
+        this.errors.push("חייב לבחור קטגוריה");
+      }
+
       if (!this.errors.length) {
         const data = {
           postTitle: h1[0].innerText,
           postContent: contentBase64,
-          postDescription: "פה יבוא תיאור לא יודע איך עדיין",
-          postImg: img[0].src,
-          postCategory: "קטגוריה",
+          postDescription: this.form.postDescription,
+          postImg: this.form.postImg,
+          postCategory: this.form.postCategory,
           postIsPublished: false,
         };
         let postId = this.$route.query.post;
@@ -127,6 +194,7 @@ export default {
           console.log("Update exsiting post..." + postId);
           await this.$axios.put("http://localhost:3001/api/posts", data);
         }
+        window.location = "/";
       }
     },
 
