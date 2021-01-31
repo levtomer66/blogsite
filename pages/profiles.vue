@@ -80,7 +80,7 @@ export default {
   },
   async fetch() {
     const users = await this.$axios.get(
-      "http://localhost:3001/api/users/getAbout"
+      `${this.$config.baseURL}/api/users/getAbout`
     );
     this.users = users.data;
   },

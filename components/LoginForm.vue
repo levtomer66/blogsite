@@ -4,7 +4,7 @@
       <div class="login-choice"><span>Sign In with</span></div>
       <div class="signup-buttons">
         <div id="fb-root"></div>
-        <a href="http://localhost:3001/api/users/auth/google" class="google-signup" >
+        <a :href="$config.baseURL + '/api/users/auth/google'" class="google-signup" >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
@@ -34,7 +34,7 @@
           </svg>
           Google
         </a>
-        <a href="http://localhost:3001/api/users/auth/facebook" class="facebook-signup" >
+        <a :href="$config.baseURL + '/api/users/auth/facebook'" class="facebook-signup" >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"

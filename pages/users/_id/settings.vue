@@ -51,7 +51,7 @@ export default {
   },
   async fetch() {
     try {
-      const me = await this.$axios.get("http://localhost:3001/api/users/me");
+      const me = await this.$axios.get(`${this.$config.baseURL}/api/users/me`);
       this.user = me.data;
     } catch (e) {
       console.log("Couldn't fetch me");
@@ -61,7 +61,7 @@ export default {
       updateUserDetails: async function () {
           this.user.qas = this.qas;
           console.log(this.user);
-          const save = await this.$axios.post("http://localhost:3001/api/users/updateDetails", this.user)
+          const save = await this.$axios.post(`${this.$config.baseURL}/api/users/updateDetails`, this.user)
       },
       uploadProfilePic: async function (image) {
       const file = image.target.files[0];

@@ -3,11 +3,11 @@ const { Strategy } = require("passport-jwt");
 const userService = require('../../services/usersService')
 
 
-const jwtSecret = process.env.JWTSECRET || "blogsite-secret";
+const jwtSecret = process.env.JWT_SECRET;
 const opts = {
 	secretOrKey: jwtSecret,
 	jwtFromRequest: function (req) {
-		let token = req && req.cookies && req.cookies["blogsiteToken"];
+		let token = req && req.cookies && req.cookies[process.env.COOKIE_NAME];
 		return token;
 	},
 };

@@ -173,8 +173,7 @@ export default {
   async fetch() {
     if (this.$store.state.auth) {
       try {
-        console.log("fetching me")
-        const me = await this.$axios.get("http://localhost:3001/api/users/me")
+        const me = await this.$axios.get(`${this.$config.baseURL}/api/users/me`)
         this.user = me.data
       } catch(e) {
         console.log("Couln't fetch me")

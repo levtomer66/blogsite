@@ -108,7 +108,7 @@ const jwt = require('jsonwebtoken');
 export const generateUserToken = (req, res) => {
   const userId = req.user._id; // database id
   const user = req.user;
-  const jwtSecret = 'blogsite-secret';
+  const jwtSecret = process.env.JWT_SECRET;
   const token = jwt.sign({
       iat: Math.floor(Date.now() / 1000) - 30, //jwt leeway
       user: {

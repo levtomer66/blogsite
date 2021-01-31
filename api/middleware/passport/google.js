@@ -4,8 +4,9 @@ const { handleSignIn } = require('../../controllers/usersController')
 
 const GoogleStrategy = googleStrategy.Strategy;
 
-const googleClientSecret = "m0PMgxEDvsu5F4LT1ZM0eivO";
-const googleClientId = "1080971073403-8vrie6ndgc15jg7dpscsv2dbea5diogj.apps.googleusercontent.com";
+const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
+const googleClientId = process.env.GOOGLE_CLIENT_ID;
+const baseApiUrl = process.env.BASE_API_URL;
 
 passport.use(
 	"google",
@@ -13,7 +14,7 @@ passport.use(
 		{
 			clientID: googleClientId,
 			clientSecret: googleClientSecret,
-			callbackURL: "http://localhost:3001/api/users/auth/google/callback",
+			callbackURL: `${baseApiUrl}/api/users/auth/google/callback`,
             scope: ["profile", "email", "user.birthday.read", "user.gender.read"],
 		},
 		handleSignIn

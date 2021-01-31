@@ -110,7 +110,8 @@ export default {
     },
   },
   async fetch() {
-    this.posts = await fetch("http://localhost:3001/api/posts").then((res) =>
+    console.log(this.$config);
+    this.posts = await fetch(`${this.$config.baseURL}/api/posts`).then((res) =>
       res.json()
     );
   },

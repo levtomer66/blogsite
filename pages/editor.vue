@@ -124,7 +124,7 @@ export default {
     if (this.$route.query.post !== undefined) {
       try {
         const post = await this.$axios.get(
-          `http://localhost:3001/api/posts/${this.$route.query.post}`
+          `${this.$config.baseURL}/api/posts/${this.$route.query.post}`
         );
         this.form.postDescription = post.data.postDescription;
         this.form.postImg = post.data.postImg;
@@ -187,12 +187,12 @@ export default {
         let postId = this.$route.query.post;
         if (postId === undefined) {
           console.log("Creating new post...");
-          await this.$axios.post("http://localhost:3001/api/posts", data);
+          await this.$axios.post(`${this.$config.baseURL}/api/posts`, data);
         } else {
           // update (put) if editing existing post
           data.postId = postId;
           console.log("Update exsiting post..." + postId);
-          await this.$axios.put("http://localhost:3001/api/posts", data);
+          await this.$axios.put(`${this.$config.baseURL}/api/posts`, data);
         }
         window.location = "/";
       }

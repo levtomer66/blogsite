@@ -72,4 +72,18 @@ export default {
      */
     extend(config, ctx) {},
   },
+
+  publicRuntimeConfig: {
+    baseURL: process.env.BASE_API_URL,
+    cookieName: process.env.COOKIE_NAME
+  },
+  privateRuntimeConfig: {
+    facebookAppId: process.env.FACEBOOK_APP_ID,
+    facebookAppSecret: process.env.FACEBOOK_APP_SECRET,
+    googleClientId: process.env.GOOGLE_CLIENT_ID,
+    googleSecretId: process.env.GOOGLE_CLIENT_SECRET,
+    jwtSecret: process.env.JWT_SECRET,
+  }
+
 };
+

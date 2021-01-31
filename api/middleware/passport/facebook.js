@@ -4,8 +4,9 @@ const { handleSignIn } = require('../../controllers/usersController')
 
 const FacebookStrategy = fbStrategy.Strategy;
 
-const facebookAppSecret = "80a67336a5a0a1249259a92f9b838708";
-const FACEBOOK_APP_ID = "1182595942212387";
+const facebookAppSecret = process.env.FACEBOOK_APP_SECRET
+const FACEBOOK_APP_ID = process.env.FACEBOOK_APP_ID;
+const BASE_API_URL = process.env.BASE_API_URL
 
 passport.use(
 	"facebook",
@@ -13,7 +14,7 @@ passport.use(
 		{
 			clientID: FACEBOOK_APP_ID,
 			clientSecret: facebookAppSecret,
-			callbackURL: "http://localhost:3001/api/users/auth/facebook/callback",
+			callbackURL: `${BASE_API_URL}/api/users/auth/facebook/callback`,
 			profileFields: [
 				"email",
 				"first_name",

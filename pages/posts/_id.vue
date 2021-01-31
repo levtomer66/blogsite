@@ -37,7 +37,7 @@ export default {
   async fetch() {
     const postId = this.$route.params.id;
     const post = await this.$axios.get(
-      `http://localhost:3001/api/posts/${postId}`
+      `${this.$config.baseURL}/api/posts/${postId}`
     );
     const content = Buffer.from(post.data.postContent, "base64").toString(
       "utf8"

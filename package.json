@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "dev-api": "NODE_ENV=dev vercel dev --listen 3001",
-    "dev-nuxt": "API_URL=http://localhost:3001 nuxt",
+    "dev-nuxt": "BASE_API_URL=http://localhost:3001 nuxt",
     "dev": "concurrently \"npm:dev-api\" \"npm:dev-nuxt\"",
     "build": "nuxt build",
     "start": "nuxt start",
