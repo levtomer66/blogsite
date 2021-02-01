@@ -9,7 +9,7 @@
           />
         <div class="col-md-3 col-sm-6" v-for="u in users" :key="u._id">
             <div class="our-team">
-                <a :href="'/profiles/' + u._id" >
+                <a :href="'/profiles/' + u.id" >
                 <img :src="u.picPath" alt="Profle Picutre">
                 </a>
                 <h3 class="title">{{ u.firstName }}</h3>

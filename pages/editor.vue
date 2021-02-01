@@ -21,7 +21,7 @@
   <div>
       <label class="label">קטגוריה</label>
       <ul class="control">
-        <li v-for="cat of categories" :key="cat" >
+        <li v-for="cat in categories" :key="cat.name" >
         {{ cat.name }} <input type="radio" :id=cat.uri :value=cat.uri name="category" v-model="form.postCategory">
       </li>
         </ul>
@@ -147,13 +147,17 @@ export default {
       formData.append("image", file);
       const CLIENT_ID = "7d3820b2b717a2b";
       const ROOT_URL = "https://api.imgur.com";
+      try {
 
-      const res = await this.$axios.post(`${ROOT_URL}/3/image`, formData, {
-        headers: {
-          Authorization: `Bearer f8c2b8ade9dc01a6d0d8b4ac82d3903e02611faa`,
-        },
-      });
-      this.form.postImg = res.data.data.link;
+        const res = await this.$axios.post(`${ROOT_URL}/3/image`, formData, {
+          headers: {
+            Authorization: `Bearer f8c2b8ade9dc01a6d0d8b4ac82d3903e02611faa`,
+          },
+        });
+        this.form.postImg = res.data.data.link;
+      } catch(e) {
+        console.log(`Failed to upload image: ${e}`);
+      }
     },
     setContent: function (con) {
       this.defaultValue = Buffer.from(con, "base64").toString("utf8");

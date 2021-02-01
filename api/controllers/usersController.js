@@ -125,10 +125,15 @@ export const generateUserToken = (req, res) => {
       subject: userId.toString()
     }
   );
-  res.cookie("blogsiteToken", token, {
+  res.cookie(process.env.COOKIE_NAME, token, {
     domain: process.env.NODE_ENV === "production" ? COOKIE_DOMAIN : "",
     expires: token.exp * 1000,
   }).redirect('/');
+}
+
+export const logout = async (req, res) => {
+  console.log("logging out...")
+  return res.clearCookie(process.env.COOKIE_NAME).redirect("/");
 }
 
 export const getAdminsAbout = async (req, res) => {
@@ -136,10 +141,19 @@ export const getAdminsAbout = async (req, res) => {
   return res.status(200).send(users);
 }
 
-export const getProfileDetails = async (req, res) => {
+export const getMeDetails = async (req, res) => {
   const userId = req.user.id;
   console.log(userId);
   const profile = await userService.getProfileDetailsForUserId(userId);
+  if (!profile) {
+      return res.status(404).send("Coulnd't fetch profile")
+  }
+  return res.status(200).send(profile);
+}
+
+export const getProfileDetails = async (req, res) => {
+  const id = req.params.id;
+  const profile = await userService.getProfileDetailsForUserId(id);
   if (!profile) {
       return res.status(404).send("Coulnd't fetch profile")
   }

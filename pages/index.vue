@@ -36,7 +36,7 @@
         <div class="w-dyn-list">
           <div class="w-clearfix w-dyn-items w-row">
             <div
-              class="featuredthumbnail w-col w-col-6 w-dyn-item"
+              class="featuredthumbnail w-col w-col-4 w-dyn-item"
               v-for="p of posts"
               :key="p._id"
             >
@@ -119,6 +119,3 @@ export default {
   fetchOnServer: false,
 };
 </script>
-
-<style>
-</style>

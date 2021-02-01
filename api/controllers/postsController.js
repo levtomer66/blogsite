@@ -24,7 +24,6 @@ export const getPosts = async (req, res) => {
 
 export const savePost = async (req, res) => {
     var doc = {
-      _id: req.body.postId,
       postTitle: req.body.postTitle,
       postDescription: req.body.postDescription,
       postContent: req.body.postContent,
@@ -35,7 +34,11 @@ export const savePost = async (req, res) => {
       authorName: `${req.user.firstName} ${req.user.familyName}`,
       authorPic: req.user.picPath,
       authorEmail: req.user.email
+    };
+    let id = null;
+    if (req.body.postId != undefined) {
+      id = req.body.postId;
     }
-    await postsService.savePost(doc);
+    await postsService.savePost(id, doc);
     return res.status(201).json({msg: "post saved", post_id: doc._id})
 }

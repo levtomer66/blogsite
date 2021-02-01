@@ -23,7 +23,7 @@
           </a>
           <div class="dropdown" :style="picClick ? 'display: inline-block' : null">
             <a :href="'users/' + user.id + '/settings'">הגדרות</a>
-            <a :href="'/logout'">התנתק</a>
+            <a @click="logout()" href="/">התנתק</a>
           </div>
         </div>
         <nav class="nav-menu w-nav-menu" role="navigation">
@@ -43,12 +43,6 @@
             v-if="this.$store.state.auth === null"
             to="login"
             >התחבר</nuxt-link
-          >
-          <nuxt-link
-            class="nav-link w-nav-link"
-            v-if="this.$store.state.auth !== null"
-            to="logout"
-            >התנתק</nuxt-link
           >
           <a
             class="close-x w-hidden-main w-hidden-medium w-hidden-small"
@@ -168,6 +162,10 @@ export default {
   methods: {
     dropdown() {
       this.picClick = !this.picClick;
+    },
+    async logout() {
+      await this.$store.dispatch('logout')
+      await this.$axios.get(`${this.$config.baseURL}/api/users/logout`);
     }
   },
   async fetch() {
