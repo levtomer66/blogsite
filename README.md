@@ -19,3 +19,4 @@ $ npx create-nuxt-app my-app
 ```
 
 > The only change made is to amend the output directory in `nuxt.config.js` to `"/public"`.
+# coacher
