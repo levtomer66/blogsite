@@ -1,122 +1,60 @@
 <template>
+  <div id="app">
   <div>
-    <div class="category-section">
-      <div class="w-container">
-        <div class="w-dyn-list">
-          <div class="w-clearfix w-dyn-items w-row">
-            <div
-              class="category-wrapper w-col w-col-2 w-dyn-item"
-              v-for="cat in categories"
-              :key="cat.name"
-            >
-              <a class="category-link" :href="'?category=' + cat.uri">{{
-                cat.name
-              }}</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="bottom-padding main-section" id="posts">
-      <div class="w-container" id="Latest-post">
-        <div class="section-heading">
-          <h2 class="section-title">
-            {{ getCategoryByName($route.query.category) }}
-          </h2>
-          <img
-            height="40px"
-            width="40px"
-            src="https://i.gifer.com/ZZ5H.gif"
-            v-if="$fetchState.pending"
-          />
-
-          <div class="med-divider"></div>
-        </div>
-        <div class="w-dyn-list">
-          <div class="w-clearfix w-dyn-items w-row">
-            <div
-              class="featuredthumbnail w-col w-col-6 w-dyn-item"
-              v-for="p of posts"
-              :key="p._id"
-            >
-              <a
-                class="featured-wrapper w-inline-block"
-                data-ix="featured-wrapper"
-                :href="`/posts/${p._id}`"
-                style="
-                  transition: transform 0.2s ease 0s,
-                    -webkit-transform 0.2s ease 0s;
-                "
-              >
-                <div>
-                  <div
-                    class="category-tag-2"
-                    :style="`background-color: ${p.categoryhexcolor};`"
-                  >
-                    {{ p.postCategory }}
-                  </div>
-                  <div
-                    class="featured-image"
-                    :style="`background-image: url('${p.postImg}');`"
-                  ></div>
-                </div>
-                <div class="featured-text">
-                  <div class="featured-title">{{ p.postTitle }}</div>
-                  <div class="featured-description">
-                    {{ p.postDescription }}
-                  </div>
-                  <div class="featured-details">
-                    <div class="w-clearfix">
-                      <img class="author-img" :src="`${p.authorPic}`" />
-                      <div class="author-title lite">{{ p.authorName }}</div>
-                      <div class="lite thumbnail-date"></div>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <form-wizard shape="square" color="#3498db">
+      <tab-content title="עם פתיחת יום" icon="ti-user" :before-change="()=>validateStep('step1')">
+        <Step1 ref="step1" @on-validate="mergePartialModels" />
+      </tab-content>
+      <tab-content title="השלם בין 6-8 למשפטים הבאים" icon="ti-settings" :before-change="()=>validateStep('step2')">
+        <Step2 ref="step2" @on-validate="mergePartialModels" />
+      </tab-content>
+      <tab-content title="כלי הצהרת הצלחה" icon="ti-settings" :before-change="()=>validateStep('step3')">
+        <Step3 ref="step3" @on-validate="mergePartialModels" />
+      </tab-content>
+      <tab-content title="כלי חמשת עקרונות ההצלחה לכתוב 5 הצלחות כל יום" icon="ti-settings" :before-change="()=>validateStep('step4')">
+        <Step4 ref="step4" @on-validate="mergePartialModels" />
+      </tab-content>
+      <tab-content title="Last step" icon="ti-check">
+        Here is your final model:
+       <pre>{{finalModel}}</pre>
+      </tab-content>
+    </form-wizard>
   </div>
+</div>
+
 </template>
 
 <script>
-import categoriesJ from "../static/categories.json";
+
+
+import Step1 from "../components/Step1";
+import Step2 from "../components/Step2";
+import Step3 from "../components/Step3";
+import Step4 from "../components/Step4";
+
 export default {
+  components: { Step1, Step2, Step3, Step4 },
   data() {
     return {
-      posts: [],
-      categories: categoriesJ,
-      activeLoginModal: null,
-    };
-  },
-  beforeRouteLeave(to, from, next) {
-    if (to.name === "product-id") {
-      this.displayProductModal(to);
-    } else {
-      next();
+      finalModel: {}
     }
   },
   methods: {
-    getCategoryByName: function (cat) {
-      const returnedCat = this.categories.filter((x) => {
-        return x.uri == cat;
-      })[0];
-      if (returnedCat !== undefined) return returnedCat.name;
-      return "הכל";
+    finish() {
+      this.$axios.post("/savePost", this.finalModel)
     },
-  },
-  async fetch() {
-    console.log(this.$config);
-    this.posts = await fetch(`${this.$config.baseURL}/api/posts`).then((res) =>
-      res.json()
-    );
-  },
-  // call fetch only on client-side
-  fetchOnServer: false,
+    validateStep(name) {
+      var refToValidate = this.$refs[name];
+      console.log(refToValidate)
+      return refToValidate.validate();
+    },
+    mergePartialModels(model, isValid){
+      if(isValid){
+      // merging each step model into the final model
+       this.finalModel = Object.assign({},this.finalModel, model)
+      }
+    }
+  }
 };
 </script>
 

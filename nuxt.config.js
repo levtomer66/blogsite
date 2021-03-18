@@ -33,18 +33,11 @@ export default {
   /*
    ** Global CSS
    */
-  css: ["static/stolen.css",
-    'medium-editor/dist/css/medium-editor.css',
-    'vuejs-medium-editor/src/themes/default.css',
-    'highlight.js/styles/ocean.css' //if using code highlight
-  ],
+  css: [],
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [{
-    src: '~/plugins/medium-editor',
-    ssr: false
-  }, "~/plugins/vee-validate"],
+  plugins: [{src: '~/plugins/vuelidate'}, '~/plugins/vue-form-wizard'],
   /*
    ** Nuxt.js modules
    */
